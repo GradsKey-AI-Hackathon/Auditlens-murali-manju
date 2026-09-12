@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Audit Lens — Login & Signup</title>
+
+<link rel="stylesheet" href="/css/signup.css">
+</head>
+
+<body>
+
+<div class="card">
+
+    <div class="logo">
+        <span class="logo-mark">A</span><span class="logo-text">Audit<span>Lens</span></span>
+    </div>
+
+    <div class="subtitle" id="subtitle">
+        Welcome back — log in to continue
+    </div>
+
+    <!-- LOGIN / SIGNUP TABS -->
+
+    <div class="tabs">
+
+        <div
+            class="tab active"
+            data-tab="login"
+        >
+            Log In
+        </div>
+
+        <div
+            class="tab"
+            data-tab="signup"
+        >
+            Sign Up
+        </div>
+
+    </div>
+
+    <!-- BUYER / VENDOR -->
+
+    <div class="roles">
+
+        <div
+            class="role active"
+            data-role="buyer"
+        >
+            <span class="icon">🛒</span>
+            Buyer
+        </div>
+
+        <div
+            class="role"
+            data-role="vendor"
+        >
+            <span class="icon">🏪</span>
+            Vendor
+        </div>
+
+    </div>
+
+    <div
+        class="login-note"
+        id="loginNote"
+    >
+        Select your role to continue to the correct dashboard.
+    </div>
+
+    <!-- FORM -->
+
+    <form
+        id="authForm"
+        autocomplete="off"
+    >
+
+        <!-- BUYER SIGNUP -->
+
+        <div
+            id="buyerFields"
+            class="signup-only hidden"
+        >
+
+            <label>Full Name</label>
+
+            <input
+                type="text"
+                name="name"
+                placeholder="John Doe"
+            >
+
+        </div>
+
+        <!-- VENDOR SIGNUP -->
+
+        <div
+            id="vendorFields"
+            class="signup-only hidden"
+        >
+
+            <div class="row">
+
+                <div>
+
+                    <label>Business Name</label>
+
+                    <input
+                        type="text"
+                        name="business_name"
+                        placeholder="Acme Supplies"
+                    >
+
+                </div>
+
+                <div>
+
+                    <label>Owner Name</label>
+
+                    <input
+                        type="text"
+                        name="owner_name"
+                        placeholder="John Doe"
+                    >
+
+                </div>
+
+            </div>
+
+            <div style="margin-top:14px;">
+
+                <label>Address</label>
+
+                <textarea
+                    name="address"
+                    rows="2"
+                    placeholder="Business address"
+                ></textarea>
+
+            </div>
+
+        </div>
+
+        <!-- EMAIL -->
+
+        <div>
+
+            <label>Email</label>
+
+            <input
+                type="email"
+                name="email"
+                placeholder="you@example.com"
+                required
+            >
+
+        </div>
+
+        <!-- PHONE -->
+
+        <div>
+
+            <label>Phone</label>
+
+            <input
+                type="tel"
+                name="phone"
+                placeholder="9876543210"
+            >
+
+        </div>
+
+        <!-- PASSWORD -->
+
+        <div>
+
+            <label>Password</label>
+
+            <input
+                type="password"
+                name="password"
+                placeholder="Minimum 6 characters"
+                minlength="6"
+                required
+            >
+
+        </div>
+
+        <button
+            type="submit"
+            class="submit"
+            id="submitBtn"
+        >
+            Log In
+        </button>
+
+    </form>
+
+    <div
+        id="message"
+        class="message"
+    ></div>
+
+    <div class="switch">
+
+        <span id="switchText">
+            Don't have an account?
+        </span>
+
+        <a id="switchLink">
+            Sign up
+        </a>
+
+    </div>
+
+    <a
+        href="/index.html"
+        class="back"
+    >
+        ← Back to home
+    </a>
+
+</div>
+
+<!-- KEEP YOUR EXISTING CONFIG.JS -->
+
+<script src="/js/config.js"></script>
+<script src="/js/signup.js"></script>
+
+</body>
+</html>

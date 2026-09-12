@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Invoices — Audit Lens Vendor</title>
+<link rel="stylesheet" href="/css/invoices.css">
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="logo" onclick="location.href='index.html'"><span class="logo-mark">A</span><span class="logo-text">Audit<span>Lens</span></span></div>
+    <div class="nav">
+      <button onclick="location.href='vendor.html'">Orders</button>
+      <button class="active">Invoices</button>
+      <button onclick="location.href='audit.html'">Audit</button>
+    </div>
+    <div class="user-box">
+      <span class="role-badge" id="roleBadge">VENDOR</span>
+      <span class="user-email" id="userEmail">—</span>
+      <button class="btn btn-ghost" onclick="logout()">Logout</button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <div class="page-head">
+    <div>
+      <div class="page-title">Invoices</div>
+      <div class="page-sub">Submit vendor invoices against accepted purchase orders.</div>
+    </div>
+    <div style="display:flex; gap:10px; flex-wrap:wrap;">
+      <button class="btn btn-ghost" onclick="location.href='audit.html'">📊 Audit History</button>
+      <button class="btn btn-primary" onclick="openSubmitModal()">+ Submit Invoice</button>
+    </div>
+  </div>
+
+  <div class="stats">
+    <div class="stat">
+      <div class="stat-label">Total Invoices</div>
+      <div class="stat-value" id="statTotal">0</div>
+    </div>
+    <div class="stat">
+      <div class="stat-label">Passed Audit</div>
+      <div class="stat-value green" id="statPassed">0</div>
+    </div>
+    <div class="stat">
+      <div class="stat-label">Discrepancies</div>
+      <div class="stat-value red" id="statFlags">0</div>
+    </div>
+    <div class="stat">
+      <div class="stat-label">Total Exposure</div>
+      <div class="stat-value orange" id="statExposure">₹0</div>
+    </div>
+  </div>
+
+  <div class="toolbar">
+    <div class="filters" id="filters">
+      <div class="filter-chip active" data-status="all">All</div>
+      <div class="filter-chip" data-status="submitted">Submitted</div>
+      <div class="filter-chip" data-status="audited">Audited</div>
+      <div class="filter-chip" data-status="CLEAR">CLEAR</div>
+      <div class="filter-chip" data-status="DISCREPANCY">DISCREPANCY</div>
+    </div>
+  </div>
+
+  <div id="invoicesContainer">
+    <!-- Populated by JS -->
+  </div>
+</main>
+
+<!-- SUBMIT MODAL -->
+<div class="modal-overlay" id="submitModal">
+  <div class="modal">
+    <div class="modal-head">
+      <h2>Submit Invoice</h2>
+      <button class="close-x" onclick="closeSubmitModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="row-2">
+        <div>
+          <div class="field">
+            <label>Purchase Order *</label>
+            <select id="poSelect"></select>
+            <div class="hint">Only accepted POs are listed.</div>
+          </div>
+          <div id="poSummaryBox" style="display:none; background:var(--card-2); border:1px solid var(--border); border-radius:10px; padding:14px; margin-bottom:16px;">
+            <div class="section-title" style="margin-top:0;">Selected PO</div>
+            <div class="kv-row"><span class="k">PO Number</span><span class="v mono" id="sPoNum">—</span></div>
+            <div class="kv-row"><span class="k">Item</span><span class="v" id="sPoItem">—</span></div>
+            <div class="kv-row"><span class="k">Expected Qty</span><span class="v" id="sPoQty">—</span></div>
+            <div class="kv-row"><span class="k">Unit Price</span><span class="v" id="sPoPrice">—</span></div>
+            <div class="kv-row"><span class="k">PO Total</span><span class="v" id="sPoTotal">—</span></div>
+            <div class="kv-row"><span class="k">Buyer</span><span class="v" id="sBuyer">—</span></div>
+          </div>
+          <div class="field">
+            <label>Raw Invoice Text *</label>
+            <textarea id="rawText" placeholder="Paste the vendor invoice text here.
+
+Example:
+INVOICE #INV-2026-0789
+From: Test Supplies Pvt Ltd
+Date: 12/09/2026
+Wireless Mouse Pro  —  qty: 48  —  Rs 450 each
+Wireless Mouse Pro  —  qty: 2   —  Rs 470 each
+Total: 22540 INR"></textarea>
+            <div class="hint">Paste unformatted text — AI extracts the fields.</div>
+          </div>
+          <div style="display:flex; gap:10px;">
+            <button class="btn btn-primary" id="submitBtn" onclick="submitInvoice()" style="flex:1;">🔍 Submit & Audit</button>
+            <button class="btn btn-ghost" onclick="clearSubmitForm()">Clear</button>
+          </div>
+        </div>
+        <div>
+          <div class="section-title" style="margin-top:0;">Audit Result</div>
+          <div id="resultBox" style="background:var(--card-2); border:1px solid var(--border); border-radius:10px; padding:18px; min-height:460px;">
+            <div class="state-box" style="border:none; background:transparent; padding:60px 20px;">
+              <div class="big-icon">🤖</div>
+              <h3>Waiting for submission</h3>
+              <p>Fill in the form and hit Submit to see the AI audit result here.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- DETAIL MODAL -->
+<div class="modal-overlay" id="detailModal">
+  <div class="modal">
+    <div class="modal-head">
+      <h2 id="detailTitle">Invoice Details</h2>
+      <button class="close-x" onclick="closeDetailModal()">✕</button>
+    </div>
+    <div class="modal-body" id="detailBody">
+      <div class="skeleton" style="height:160px;"></div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-ghost" onclick="closeDetailModal()">Close</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<!-- CONFIG -->
+<script src="/js/config.js"></script>
+<script src="/js/invoices.js"></script>
+</body>
+</html>

@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Buyer Control Center — Audit Lens</title>
+
+<link rel="stylesheet" href="/css/buyer.css">
+</head>
+
+<body>
+
+<!-- =========================================================
+     HEADER
+     ========================================================= -->
+
+<header>
+
+    <div class="header-inner">
+
+        <div
+            class="logo"
+            onclick="showView('dashboard')"
+        >
+            <span class="logo-mark">A</span><span class="logo-text">Audit<span>Lens</span></span>
+        </div>
+
+        <nav class="nav">
+
+            <button
+                id="navDashboard"
+                class="active"
+                onclick="showView('dashboard')"
+            >
+                Dashboard
+            </button>
+
+            <button
+                id="navOrders"
+                onclick="showView('orders')"
+            >
+                Purchase Orders
+            </button>
+
+            <button
+                id="navAudits"
+                onclick="showView('audits')"
+            >
+                Audit History
+            </button>
+
+        </nav>
+
+        <div class="user-box">
+
+            <span class="role-badge">
+                BUYER
+            </span>
+
+            <span
+                class="user-id"
+                id="userLabel"
+            >
+                Buyer
+            </span>
+
+            <button
+                class="btn btn-ghost"
+                onclick="logout()"
+            >
+                Logout
+            </button>
+
+        </div>
+
+    </div>
+
+</header>
+
+
+<!-- =========================================================
+     MAIN
+     ========================================================= -->
+
+<main>
+
+    <!-- =====================================================
+         DASHBOARD
+         ===================================================== -->
+
+    <section
+        id="view-dashboard"
+        class="view active"
+    >
+
+        <div class="page-head">
+
+            <div>
+
+                <h1 class="page-title">
+                    Procurement Control Center
+                </h1>
+
+                <p class="page-sub">
+                    Monitor purchase orders, vendor invoices, and AI-powered audit exceptions.
+                </p>
+
+            </div>
+
+            <button
+                class="btn btn-primary"
+                onclick="openCreateModal()"
+            >
+                + New Purchase Order
+            </button>
+
+        </div>
+
+
+        <!-- STATS -->
+
+        <div class="stats">
+
+            <div class="stat">
+
+                <div class="stat-label">
+                    Total Purchase Orders
+                </div>
+
+                <div
+                    class="stat-value"
+                    id="statTotalPO"
+                >
+                    —
+                </div>
+
+            </div>
+
+
+            <div class="stat">
+
+                <div class="stat-label">
+                    Pending
+                </div>
+
+                <div
+                    class="stat-value orange"
+                    id="statPending"
+                >
+                    —
+                </div>
+
+            </div>
+
+
+            <div class="stat">
+
+                <div class="stat-label">
+                    Accepted
+                </div>
+
+                <div
+                    class="stat-value green"
+                    id="statAccepted"
+                >
+                    —
+                </div>
+
+            </div>
+
+
+            <div class="stat">
+
+                <div class="stat-label">
+                    Audits
+                </div>
+
+                <div
+                    class="stat-value blue"
+                    id="statAudits"
+                >
+                    —
+                </div>
+
+            </div>
+
+
+            <div class="stat">
+
+                <div class="stat-label">
+                    Financial Exposure
+                </div>
+
+                <div
+                    class="stat-value red"
+                    id="statExposure"
+                >
+                    ₹0
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- RECENT AUDITS -->
+
+        <div class="toolbar">
+
+            <div>
+
+                <h2 style="font-size:19px;">
+                    Recent Audit Activity
+                </h2>
+
+                <div
+                    style="
+                        color:var(--muted);
+                        font-size:12px;
+                        margin-top:3px;
+                    "
+                >
+                    Latest vendor invoice audit decisions
+                </div>
+
+            </div>
+
+            <button
+                class="btn btn-ghost"
+                onclick="showView('audits')"
+            >
+                View All Audits →
+            </button>
+
+        </div>
+
+
+        <div
+            id="recentAudits"
+            class="table-wrap"
+        >
+            <div class="loading">
+                Loading audit activity...
+            </div>
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         PURCHASE ORDERS
+         ===================================================== -->
+
+    <section
+        id="view-orders"
+        class="view"
+    >
+
+        <div class="page-head">
+
+            <div>
+
+                <h1 class="page-title">
+                    Purchase Orders
+                </h1>
+
+                <p class="page-sub">
+                    Create, track, and manage vendor purchase orders.
+                </p>
+
+            </div>
+
+            <button
+                class="btn btn-primary"
+                onclick="openCreateModal()"
+            >
+                + New Purchase Order
+            </button>
+
+        </div>
+
+
+        <div class="toolbar">
+
+            <div class="filters">
+
+                <button
+                    class="filter-chip active"
+                    data-status="all"
+                >
+                    All
+                </button>
+
+                <button
+                    class="filter-chip"
+                    data-status="pending"
+                >
+                    Pending
+                </button>
+
+                <button
+                    class="filter-chip"
+                    data-status="accepted"
+                >
+                    Accepted
+                </button>
+
+                <button
+                    class="filter-chip"
+                    data-status="completed"
+                >
+                    Completed
+                </button>
+
+                <button
+                    class="filter-chip"
+                    data-status="cancelled"
+                >
+                    Cancelled
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <div id="ordersContainer"></div>
+
+    </section>
+
+
+    <!-- =====================================================
+         AUDITS
+         ===================================================== -->
+
+    <section
+        id="view-audits"
+        class="view"
+    >
+
+        <div class="page-head">
+
+            <div>
+
+                <h1 class="page-title">
+                    Invoice Audit History
+                </h1>
+
+                <p class="page-sub">
+                    Every vendor invoice is compared against the authoritative purchase order.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div
+            id="auditsContainer"
+            class="table-wrap"
+        >
+
+            <div class="loading">
+                Loading audits...
+            </div>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<!-- =========================================================
+     CREATE PO MODAL
+     ========================================================= -->
+
+<div
+    class="modal-overlay"
+    id="createModal"
+>
+
+    <div class="modal">
+
+        <div class="modal-head">
+
+            <h2>
+                New Purchase Order
+            </h2>
+
+            <button
+                class="close-x"
+                onclick="closeCreateModal()"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <div class="modal-body">
+
+            <div class="field">
+
+                <label>
+                    Select Approved Vendor *
+                </label>
+
+                <select
+                    id="poVendorId"
+                >
+
+                    <option value="">
+                        Loading vendors...
+                    </option>
+
+                </select>
+
+                <div
+                    class="vendor-info"
+                    id="vendorInfo"
+                >
+                    Select an approved vendor.
+                </div>
+
+            </div>
+
+
+            <div class="field">
+
+                <label>
+                    Item Name *
+                </label>
+
+                <input
+                    type="text"
+                    id="poItemName"
+                    placeholder="Wireless Mouse Pro"
+                >
+
+            </div>
+
+
+            <div class="row">
+
+                <div class="field">
+
+                    <label>
+                        Expected Quantity *
+                    </label>
+
+                    <input
+                        type="number"
+                        id="poQuantity"
+                        min="0.01"
+                        step="0.01"
+                        placeholder="50"
+                    >
+
+                </div>
+
+
+                <div class="field">
+
+                    <label>
+                        Agreed Unit Price *
+                    </label>
+
+                    <input
+                        type="number"
+                        id="poUnitPrice"
+                        min="0.01"
+                        step="0.01"
+                        placeholder="450"
+                    >
+
+                </div>
+
+            </div>
+
+
+            <div
+                class="kv-row"
+                style="
+                    display:flex;
+                    justify-content:space-between;
+                    padding:12px 0;
+                    border-top:1px solid var(--border);
+                    margin-top:5px;
+                "
+            >
+
+                <span style="color:var(--muted);">
+                    Estimated PO Value
+                </span>
+
+                <strong
+                    id="poEstimatedTotal"
+                    style="color:var(--buyer);"
+                >
+                    ₹0.00
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <div class="modal-foot">
+
+            <button
+                class="btn btn-ghost"
+                onclick="closeCreateModal()"
+            >
+                Cancel
+            </button>
+
+            <button
+                class="btn btn-primary"
+                id="createSubmitBtn"
+                onclick="submitCreate()"
+            >
+                Create Order
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+     PO DETAIL MODAL
+     ========================================================= -->
+
+<div
+    class="modal-overlay"
+    id="detailModal"
+>
+
+    <div class="modal">
+
+        <div class="modal-head">
+
+            <h2 id="detailTitle">
+                Purchase Order
+            </h2>
+
+            <button
+                class="close-x"
+                onclick="closeDetailModal()"
+            >
+                ×
+            </button>
+
+        </div>
+
+        <div
+            class="modal-body"
+            id="detailBody"
+        ></div>
+
+        <div class="modal-foot">
+
+            <button
+                class="btn btn-ghost"
+                onclick="closeDetailModal()"
+            >
+                Close
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+     AUDIT DETAIL MODAL
+     ========================================================= -->
+
+<div
+    class="modal-overlay"
+    id="auditModal"
+>
+
+    <div class="modal modal-wide">
+
+        <div class="modal-head">
+
+            <h2 id="auditTitle">
+                Audit Details
+            </h2>
+
+            <button
+                class="close-x"
+                onclick="closeAuditModal()"
+            >
+                ×
+            </button>
+
+        </div>
+
+        <div
+            class="modal-body"
+            id="auditBody"
+        ></div>
+
+        <div class="modal-foot">
+
+            <button
+                class="btn btn-ghost"
+                onclick="closeAuditModal()"
+            >
+                Close
+            </button>
+
+            <button
+                class="btn btn-primary"
+                onclick="openFullAuditPage()"
+                id="fullAuditBtn"
+            >
+                Open Audit Page →
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+     TOAST
+     ========================================================= -->
+
+<div
+    class="toast"
+    id="toast"
+></div>
+
+
+<!-- CONFIG -->
+<script src="/js/config.js"></script>
+<script src="/js/buyer.js"></script>
+
+</body>
+</html>

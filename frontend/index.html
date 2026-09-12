@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Audit Lens — Trusted AI Audit for Procurement</title>
+<link rel="stylesheet" href="/css/index.css">
+</head>
+<body>
+
+<!-- Custom cursor -->
+<div class="cursor-dot" id="cursorDot"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- 3D background canvas -->
+<canvas id="bg-canvas"></canvas>
+
+<!-- Aurora glows + noise -->
+<div class="aurora aurora-1"></div>
+<div class="aurora aurora-2"></div>
+<div class="aurora aurora-3"></div>
+<div class="noise"></div>
+
+<!-- ============ NAVBAR ============ -->
+<nav id="navbar">
+  <div class="nav-inner">
+    <div class="logo" onclick="scrollToTop()">
+      <span class="logo-mark">H</span>
+      <div class="logo-text">Audit<span>Lens</span></div>
+    </div>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#roles">Roles</a></li>
+      <li><a href="#features">Features</a></li>
+      <li><a href="#stats">Why us</a></li>
+      <li><a href="#cta">Get started</a></li>
+    </ul>
+    <div class="nav-actions">
+      <a href="signup.html" class="btn btn-ghost">Log In</a>
+      <a href="signup.html" class="btn btn-primary btn-shine">Sign Up</a>
+      <button class="menu-toggle" onclick="toggleMenu()" aria-label="Menu">☰</button>
+    </div>
+  </div>
+</nav>
+
+<!-- ============ HERO ============ -->
+<section class="hero">
+  <div class="hero-text">
+    <div class="hero-badge" id="heroBadge">
+      <span class="badge-dot">✦</span>
+      <span>Now live · 500+ audits completed</span>
+    </div>
+    <h1 id="heroTitle">See beyond the <span class="grad">surface</span>, together.</h1>
+    <p id="heroPara">The all-in-one audit platform connecting auditors with trusted organizations. Fast onboarding, secure evidence, and a seamless experience for both sides.</p>
+    <div class="hero-actions" id="heroActions">
+      <a href="signup.html" class="btn btn-primary btn-large btn-shine">Get Started Free →</a>
+      <a href="#roles" class="btn btn-ghost btn-large">Learn More</a>
+    </div>
+  </div>
+
+  <div class="hero-visual" id="heroVisual">
+    <div class="orb"></div>
+    <div class="orb-ring"></div>
+    <div class="orb-ring orb-ring-2"></div>
+
+    <div class="floating-card" data-depth="1">
+      <div class="fc-head">
+        <div class="fc-icon">🔍</div>
+        <div class="fc-live"><span class="live-dot"></span>LIVE</div>
+      </div>
+      <div class="fc-title">New Audit Request</div>
+      <div class="fc-sub">Financial review · Q4 2024</div>
+      <span class="fc-badge badge-buyer">AUDITOR</span>
+    </div>
+    <div class="floating-card" data-depth="2">
+      <div class="fc-head">
+        <div class="fc-icon">🏢</div>
+        <div class="fc-live"><span class="live-dot"></span>LIVE</div>
+      </div>
+      <div class="fc-title">Organization Approved</div>
+      <div class="fc-sub">Acme Corp · pending → live</div>
+      <span class="fc-badge badge-vendor">ORG</span>
+    </div>
+    <div class="floating-card" data-depth="3">
+      <div class="fc-head">
+        <div class="fc-icon">🔐</div>
+        <div class="fc-live"><span class="live-dot"></span>SECURE</div>
+      </div>
+      <div class="fc-title">Secure Sign-Up</div>
+      <div class="fc-sub">Hashed passwords · sessions</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ROLES ============ -->
+<section class="section" id="roles">
+  <div class="section-header" id="rolesHeader">
+    <div class="section-tag">Choose Your Path</div>
+    <h2>Pick your <em>role</em></h2>
+    <p>Whether you're here to audit or to be audited, we've got a tailored experience for you.</p>
+  </div>
+
+  <div class="roles-grid" id="rolesGrid">
+    <div class="role-card buyer">
+      <div class="role-icon-wrap">🔍</div>
+      <h3>I'm an Auditor</h3>
+      <p>Review organizations, request evidence, and track compliance from verified entities.</p>
+      <ul>
+        <li><span class="check">✓</span> Instant account activation</li>
+        <li><span class="check">✓</span> Browse unlimited organizations</li>
+        <li><span class="check">✓</span> Secure evidence collection</li>
+        <li><span class="check">✓</span> Audit history & tracking</li>
+      </ul>
+      <a href="signup.html?role=auditor" class="btn btn-buyer btn-large">Sign Up as Auditor</a>
+    </div>
+
+    <div class="role-card vendor">
+      <div class="role-icon-wrap">🏢</div>
+      <h3>I'm an Organization</h3>
+      <p>Submit for audits, manage evidence, and grow trust with verified auditors.</p>
+      <ul>
+        <li><span class="check">✓</span> Business profile & address</li>
+        <li><span class="check">✓</span> Evidence submission tools</li>
+        <li><span class="check">✓</span> Audit management</li>
+        <li><span class="check">✓</span> Quick approval process</li>
+      </ul>
+      <a href="signup.html?role=organization" class="btn btn-vendor btn-large">Sign Up as Organization</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ STATS ============ -->
+<section class="stats" id="stats">
+  <div class="stat-item" data-stat>
+    <div class="stat-num" data-count="10000" data-suffix="+">0</div>
+    <div class="stat-label">Active Auditors</div>
+  </div>
+  <div class="stat-item" data-stat>
+    <div class="stat-num" data-count="500" data-suffix="+">0</div>
+    <div class="stat-label">Verified Organizations</div>
+  </div>
+  <div class="stat-item" data-stat>
+    <div class="stat-num" data-count="50000" data-suffix="+">0</div>
+    <div class="stat-label">Audits Completed</div>
+  </div>
+  <div class="stat-item" data-stat>
+    <div class="stat-num" data-count="99.9" data-suffix="%" data-decimals="1">0</div>
+    <div class="stat-label">Uptime</div>
+  </div>
+</section>
+
+<!-- ============ FEATURES ============ -->
+<section class="section" id="features">
+  <div class="section-header" id="featuresHeader">
+    <div class="section-tag">Why AuditLens</div>
+    <h2>Built for <em>both sides</em></h2>
+    <p>Everything you need to audit and be audited with confidence.</p>
+  </div>
+
+  <div class="features-grid" id="featuresGrid">
+    <div class="feature">
+      <div class="feature-icon">⚡</div>
+      <h4>Fast Sign-Up</h4>
+      <p>Create your account in under a minute — no lengthy forms, no waiting.</p>
+    </div>
+    <div class="feature">
+      <div class="feature-icon">🔐</div>
+      <h4>Secure by Default</h4>
+      <p>Passwords are hashed with modern algorithms. Your data stays yours.</p>
+    </div>
+    <div class="feature">
+      <div class="feature-icon">👥</div>
+      <h4>Role-Based Access</h4>
+      <p>Auditors and organizations each get a tailored dashboard with the right tools.</p>
+    </div>
+    <div class="feature">
+      <div class="feature-icon">📊</div>
+      <h4>Real-Time Insights</h4>
+      <p>Track audits, findings, and activity from a clean, modern interface.</p>
+    </div>
+    <div class="feature">
+      <div class="feature-icon">🌍</div>
+      <h4>Anywhere Access</h4>
+      <p>Fully responsive — works perfectly on desktop, tablet, and mobile.</p>
+    </div>
+    <div class="feature">
+      <div class="feature-icon">🚀</div>
+      <h4>Launch Fast</h4>
+      <p>Ready to deploy today. No bloated setup, no unnecessary complexity.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CTA ============ -->
+<section class="cta" id="cta">
+  <h2>Ready to get started?</h2>
+  <p>Join thousands of buyers and vendors already using Audit Lens to audit every invoice.</p>
+  <a href="signup.html" class="btn btn-primary btn-large btn-shine">Create Your Account →</a>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="footer-logo">
+    <span class="logo-mark">A</span>
+    Audit<span>Lens</span>
+  </div>
+  <div class="footer-links">
+    <a href="#roles">Roles</a>
+    <a href="#features">Features</a>
+    <a href="signup.html">Sign Up</a>
+    <a href="signup.html">Log In</a>
+  </div>
+  <div>© <span id="year"></span> Audit Lens. Built for the hackathon.</div>
+</footer>
+
+<!-- ============ FRAMER MOTION + THREE.JS ============ -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script type="module" src="/js/index.js"></script>
+</body>
+</html>

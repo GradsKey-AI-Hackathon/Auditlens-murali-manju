@@ -1,0 +1,264 @@
+:root {
+    --bg: #0f172a;
+    --card: #1e293b;
+    --card2: #273449;
+    --text: #e2e8f0;
+    --muted: #94a3b8;
+    --accent: #6366f1;
+    --accent-hover: #4f46e5;
+    --buyer: #10b981;
+    --vendor: #f59e0b;
+    --error: #ef4444;
+    --success: #22c55e;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Roboto,
+        sans-serif;
+    color: var(--text);
+    background:
+        radial-gradient(
+            circle at top,
+            #1e293b 0%,
+            #0f172a 60%
+        );
+}
+
+.card {
+    width: 100%;
+    max-width: 480px;
+    padding: 40px 36px;
+    background: var(--card);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 14px;
+    box-shadow: 0 25px 60px rgba(0,0,0,0.45);
+}
+
+.logo {
+    text-align: center;
+    font-size: 30px;
+    font-weight: 800;
+    margin-bottom: 8px;
+}
+
+.logo span {
+    color: var(--accent);
+}
+
+.subtitle {
+    text-align: center;
+    color: var(--muted);
+    font-size: 14px;
+    margin-bottom: 28px;
+}
+
+.tabs {
+    display: flex;
+    gap: 4px;
+    padding: 4px;
+    margin-bottom: 22px;
+    background: var(--card2);
+    border-radius: 10px;
+}
+
+.tab {
+    flex: 1;
+    padding: 11px;
+    text-align: center;
+    border-radius: 8px;
+    cursor: pointer;
+    color: var(--muted);
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.tab.active {
+    background: var(--accent);
+    color: white;
+}
+
+.roles {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.role {
+    flex: 1;
+    padding: 14px;
+    text-align: center;
+    border: 2px solid transparent;
+    border-radius: 10px;
+    background: var(--card2);
+    color: var(--muted);
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.role .icon {
+    display: block;
+    font-size: 21px;
+    margin-bottom: 5px;
+}
+
+.role[data-role="buyer"].active {
+    color: var(--buyer);
+    border-color: var(--buyer);
+    background: rgba(16,185,129,0.08);
+}
+
+.role[data-role="vendor"].active {
+    color: var(--vendor);
+    border-color: var(--vendor);
+    background: rgba(245,158,11,0.08);
+}
+
+.login-note {
+    padding: 9px;
+    margin-bottom: 14px;
+    text-align: center;
+    font-size: 12px;
+    color: var(--muted);
+    background: rgba(99,102,241,0.08);
+    border: 1px solid rgba(99,102,241,0.2);
+    border-radius: 8px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+label {
+    display: block;
+    margin-bottom: 6px;
+    color: var(--muted);
+    font-size: 13px;
+}
+
+input,
+textarea {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 8px;
+    outline: none;
+    background: var(--card2);
+    color: var(--text);
+    font-family: inherit;
+    font-size: 14px;
+}
+
+input:focus,
+textarea:focus {
+    border-color: var(--accent);
+}
+
+input::placeholder,
+textarea::placeholder {
+    color: #64748b;
+}
+
+.row {
+    display: flex;
+    gap: 12px;
+}
+
+.row > div {
+    flex: 1;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.submit {
+    width: 100%;
+    margin-top: 8px;
+    padding: 13px;
+    border: 0;
+    border-radius: 8px;
+    background: var(--accent);
+    color: white;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.submit:hover {
+    background: var(--accent-hover);
+}
+
+.submit:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.message {
+    display: none;
+    margin-top: 16px;
+    padding: 12px;
+    border-radius: 8px;
+    text-align: center;
+    font-size: 14px;
+}
+
+.message.error {
+    display: block;
+    color: var(--error);
+    background: rgba(239,68,68,0.12);
+}
+
+.message.success {
+    display: block;
+    color: var(--success);
+    background: rgba(34,197,94,0.12);
+}
+
+.switch {
+    margin-top: 20px;
+    text-align: center;
+    color: var(--muted);
+    font-size: 13px;
+}
+
+.switch a {
+    color: var(--accent);
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.back {
+    display: block;
+    margin-top: 18px;
+    text-align: center;
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 13px;
+}
+
+@media (max-width: 520px) {
+    .card {
+        padding: 30px 22px;
+    }
+
+    .row {
+        flex-direction: column;
+    }
+}
